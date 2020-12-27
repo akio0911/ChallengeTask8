@@ -7,25 +7,24 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     
-    @IBOutlet weak var slider: UISlider!
-    @IBOutlet weak var label: UILabel!
+    @IBOutlet private weak var slider: UISlider!
+    @IBOutlet private weak var label: UILabel!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    private var appDelegate: AppDelegate {
+        UIApplication.shared.delegate as! AppDelegate
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        slider.value = UserDefaults.standard.float(forKey: "sliderValue")
-        label.text = "\(UserDefaults.standard.float(forKey: "sliderValue"))"
+        super.viewWillAppear(animated)
+        
+        slider.value = appDelegate.sliderValue
+        label.text = String(slider.value)
     }
     
     @IBAction func sliderChanged(_ sender: UISlider) {
-        UserDefaults.standard.set(slider.value, forKey: "sliderValue")
-        let num = UserDefaults.standard.float(forKey: "sliderValue")
-        label.text = "\(num)"
+        appDelegate.sliderValue = slider.value
+        label.text = String(slider.value)
     }
-    
 }
-

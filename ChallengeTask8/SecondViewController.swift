@@ -7,24 +7,24 @@
 
 import UIKit
 
-class SecondViewController: UIViewController {
+final class SecondViewController: UIViewController {
     
-    @IBOutlet weak var slider2: UISlider!
-    @IBOutlet weak var label2: UILabel!
+    @IBOutlet private weak var slider2: UISlider!
+    @IBOutlet private weak var label2: UILabel!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    private var appDelegate: AppDelegate {
+        UIApplication.shared.delegate as! AppDelegate
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        slider2.value = UserDefaults.standard.float(forKey: "sliderValue")
-        label2.text = "\(UserDefaults.standard.float(forKey: "sliderValue"))"
+        super.viewWillAppear(animated)
+        
+        slider2.value = appDelegate.sliderValue
+        label2.text = String(slider2.value)
     }
     
     @IBAction func sliderChanged2(_ sender: UISlider) {
-        UserDefaults.standard.set(slider2.value, forKey: "sliderValue")
-        let num = UserDefaults.standard.float(forKey: "sliderValue")
-        label2.text = "\(num)"
+        appDelegate.sliderValue = slider2.value
+        label2.text = String(slider2.value)
     }
 }
